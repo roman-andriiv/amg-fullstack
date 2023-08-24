@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "amg-backend-api",
-      "image": "romanandriiv/amg-backend-api:latest",
+      "image": "romanandriiv/amg-backend-api:24.08.2023.22.43.28",
       "essential": true,
       "memory": 512,
       "portMappings": [
