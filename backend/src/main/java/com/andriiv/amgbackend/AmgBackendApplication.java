@@ -2,6 +2,7 @@ package com.andriiv.amgbackend;
 
 import com.andriiv.amgbackend.customer.Customer;
 import com.andriiv.amgbackend.customer.CustomerRepository;
+import com.andriiv.amgbackend.customer.Gender;
 import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -28,7 +29,7 @@ public class AmgBackendApplication {
             Customer customer = new Customer(
                     name.fullName(),
                     faker.internet().safeEmailAddress(),
-                    random.nextInt(16, 99));
+                    random.nextInt(16, 99), Gender.MALE);
 
             customerRepository.save(customer);
         };

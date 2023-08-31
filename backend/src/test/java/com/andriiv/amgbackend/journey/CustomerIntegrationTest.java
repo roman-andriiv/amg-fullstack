@@ -3,6 +3,7 @@ package com.andriiv.amgbackend.journey;
 import com.andriiv.amgbackend.customer.Customer;
 import com.andriiv.amgbackend.customer.CustomerRegistrationRequest;
 import com.andriiv.amgbackend.customer.CustomerUpdateRequest;
+import com.andriiv.amgbackend.customer.Gender;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class CustomerIntegrationTest {
                 .getResponseBody();
 
         //make sure that customer is present
-        Customer expectedCustomer = new Customer(name, email, age);
+        Customer expectedCustomer = new Customer(name, email, age, Gender.MALE);
 
         assertThat(customerList)
                 .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id").contains(expectedCustomer);
