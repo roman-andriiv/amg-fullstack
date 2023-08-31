@@ -1,58 +1,57 @@
-import {useState} from "react";
-import UserProfile from "./UserProfile.jsx";
+import {Spinner, Text, Wrap, WrapItem} from "@chakra-ui/react";
+import SidebarWithHeader from "./components/shared/SideBar.jsx"
+import {useEffect, useState} from "react";
+import {getCustomers} from "./services/client.js";
+import CardWithImage from "./components/Card.jsx";
 
-const users = [
-    {
-        name: "Jamila",
-        age: 22,
-        gender: "FEMALE",
-    },
-    {
-        name: "Ana",
-        age: 45,
-        gender: "FEMALE",
-    },
-    {
-        name: "Alex",
-        age: 18,
-        gender: "MALE",
-    },
-    {
-        name: "Bilal",
-        age: 27,
-        gender: "MALE",
-    },
-    {
-        name: "Bob",
-        age: 27,
-        gender: "MALE",
-    },
-]
+const App = () => {
 
-const UserProfiles = ({users}) => (
-    <div>
-        {users.map((user, index) => (
-            <UserProfile
-                key={index}
-                name={user.name}
-                age={user.age}
-                gender={user.gender}
-                imageNumber={index}
-            />
-        ))}
-    </div>
-)
+    const [customers, setCustomers] = useState([])
+    const [loading, setLoading] = useState(false)
 
-function App() {
-    const [counter, setCounter] = useState(0)
+    useEffect(() => {
+        setLoading(true)
+        getCustomers().then(resp => {
+            setCustomers(resp.data)
+        }).catch(err => {
+            console.log(err)
+        }).finally(() => {
+            setLoading(false)
+        })
+    }, [])
+
+    if (loading) {
+        return (
+            <SidebarWithHeader>
+                <Spinner
+                    thickness='4px'
+                    speed='0.65s'
+                    emptyColor='gray.200'
+                    color='blue.500'
+                    size='xl'
+                />
+            </SidebarWithHeader>
+        )
+    }
+
+    if (customers.length <= 0) {
+        return (
+            <SidebarWithHeader>
+                <Text>No customers available</Text>
+            </SidebarWithHeader>
+        )
+    }
+
     return (
-        <div>
-            <h1>{counter}</h1>
-            <button onClick={() => setCounter(prevCounter => ++prevCounter)}>
-                Increment counter
-            </button>
-            <UserProfiles users={users}/>
-        </div>
+        <SidebarWithHeader>
+            <Wrap justify={"center"} spacing={30}>
+                {customers.map((customer, index) => (
+                    <WrapItem key={index}>
+                        <CardWithImage{...customer}/>
+                    </WrapItem>
+                    ))}
+            </Wrap>
+        </SidebarWithHeader>
     )
 }
 
