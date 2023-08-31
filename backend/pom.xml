@@ -19,7 +19,7 @@
         <!--<testcontainers.version>1.18.3</testcontainers.version>-->
         <docker.username>romanandriiv</docker.username>
         <docker.image.name>amg-backend-api</docker.image.name>
-        <docker.image.tag>latest</docker.image.tag>
+        <docker.image.tag/>
     </properties>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
@@ -200,8 +200,7 @@
                         </platforms>
                     </from>
                     <to>
-                        <image>docker.io/${docker.username}/${docker.image.name}:${docker.image.tag}
-                        </image>
+                        <image>docker.io/${docker.username}/${docker.image.name}:${docker.image.tag}</image>
                         <tags>
                             <tag>latest</tag>
                         </tags>
