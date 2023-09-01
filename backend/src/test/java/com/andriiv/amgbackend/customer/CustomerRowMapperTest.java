@@ -24,12 +24,13 @@ class CustomerRowMapperTest {
         when(resultSet.getString("name")).thenReturn("Roman");
         when(resultSet.getString("email")).thenReturn("roman.andriiv.dev@gmail.com");
         when(resultSet.getInt("age")).thenReturn(27);
+        when(resultSet.getString("gender")).thenReturn("MALE");
 
         //When
         Customer actual = customerRowMapper.mapRow(resultSet, 1);
 
         //Then
-        Customer expected = new Customer(1, "Roman", "roman.andriiv.dev@gmail.com", 27);
+        Customer expected = new Customer(1, "Roman", "roman.andriiv.dev@gmail.com", 27, Gender.MALE);
         assertThat(actual).isEqualTo(expected);
     }
 }

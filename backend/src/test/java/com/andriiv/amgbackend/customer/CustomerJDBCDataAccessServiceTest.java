@@ -275,6 +275,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         update.setName("Roman");
         update.setEmail("roman.andriiv.dev@gmail.com");
         update.setAge(25);
+        update.setGender(Gender.MALE);
 
         underTest.updateCustomer(update);
 
@@ -305,11 +306,13 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
 
         //Then
         Optional<Customer> actual = underTest.selectCustomerById(id);
-        assertThat(actual).isPresent().hasValueSatisfying(c -> {
-            assertThat(c.getId()).isEqualTo(id);
-            assertThat(c.getName()).isEqualTo(customer.getName());
-            assertThat(c.getEmail()).isEqualTo(customer.getEmail());
-            assertThat(c.getAge()).isEqualTo(customer.getAge());
+        assertThat(actual).isPresent().hasValueSatisfying(updated -> {
+            assertThat(updated.getId()).isEqualTo(id);
+            assertThat(updated.getName()).isEqualTo(customer.getName());
+            assertThat(updated.getEmail()).isEqualTo(customer.getEmail());
+            assertThat(updated.getAge()).isEqualTo(customer.getAge());
+            assertThat(updated.getGender()).isEqualTo(customer.getGender());
+
         });
     }
 }

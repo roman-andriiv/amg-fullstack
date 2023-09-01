@@ -4,6 +4,7 @@ import com.andriiv.amgbackend.customer.Customer;
 import com.andriiv.amgbackend.customer.CustomerRepository;
 import com.andriiv.amgbackend.customer.Gender;
 import com.github.javafaker.Faker;
+import com.github.javafaker.Name;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,13 +24,20 @@ public class AmgBackendApplication {
 
         return args -> {
             var faker = new Faker();
-            var name = faker.name();
-            Random random = new Random();
+            var RANDOM = new Random();
+            var firstName = faker.name().firstName();
+            var lastName = faker.name().lastName();
+            var fullName = firstName + " " + lastName;
+
+            var email = firstName.toLowerCase() + "." + lastName.toLowerCase()
+                    + "@example.com";
+            int age = RANDOM.nextInt(18, 100);
+            Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
             Customer customer = new Customer(
-                    name.fullName(),
-                    faker.internet().safeEmailAddress(),
-                    random.nextInt(16, 99), Gender.MALE);
+                    fullName,
+                    email,
+                    age, gender);
 
             customerRepository.save(customer);
         };

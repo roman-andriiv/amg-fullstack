@@ -43,7 +43,7 @@ class CustomerServiceTest {
     void canGetCustomer() {
         //Given
         int id = 1;
-        Customer customer = new Customer(id, "Roman", "roman.andriiv.dev@gmail.com", 27);
+        Customer customer = new Customer(id, "Roman", "roman.andriiv.dev@gmail.com", 27, Gender.MALE);
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         //When
@@ -68,7 +68,7 @@ class CustomerServiceTest {
         //Given
         String email = "roman.andriiv.dev@gmail.com";
         when(customerDao.existCustomerWithEmail(email)).thenReturn(false);
-        CustomerRegistrationRequest request = new CustomerRegistrationRequest("Roman", email, 27);
+        CustomerRegistrationRequest request = new CustomerRegistrationRequest("Roman", email, 27, Gender.MALE);
 
         //When
         underTest.addCustomer(request);
@@ -90,7 +90,7 @@ class CustomerServiceTest {
         //Given
         String email = "roman.andriiv.dev@gmail.com";
         when(customerDao.existCustomerWithEmail(email)).thenReturn(true);
-        CustomerRegistrationRequest request = new CustomerRegistrationRequest("Roman", email, 27);
+        CustomerRegistrationRequest request = new CustomerRegistrationRequest("Roman", email, 27, Gender.MALE);
 
         //When
         assertThatThrownBy(() -> underTest.addCustomer(request)).isInstanceOf(DuplicateResourceException.class)
@@ -129,7 +129,7 @@ class CustomerServiceTest {
     @Test
     void updateCustomer_canUpdateAllProperties() {
         //Given
-        Customer customer = new Customer(1, "Roman", "roman.andriiv.dev@gmail.com", 27);
+        Customer customer = new Customer(1, "Roman", "roman.andriiv.dev@gmail.com", 27, Gender.MALE);
         when(customerDao.selectCustomerById(customer.getId())).thenReturn(Optional.of(customer));
 
 
@@ -154,7 +154,7 @@ class CustomerServiceTest {
     @Test
     void updateCustomer_canUpdateOnlyName() {
         //Given
-        Customer customer = new Customer(1, "Roman", "roman.andriiv.dev@gmail.com", 27);
+        Customer customer = new Customer(1, "Roman", "roman.andriiv.dev@gmail.com", 27, Gender.MALE);
 
         when(customerDao.selectCustomerById(customer.getId())).thenReturn(Optional.of(customer));
 
@@ -177,7 +177,7 @@ class CustomerServiceTest {
     @Test
     void updateCustomer_canUpdateOnlyEmail() {
         //Given
-        Customer customer = new Customer(1, "Roman", "roman.andriiv.dev@gmail.com", 27);
+        Customer customer = new Customer(1, "Roman", "roman.andriiv.dev@gmail.com", 27, Gender.MALE);
 
         when(customerDao.selectCustomerById(customer.getId())).thenReturn(Optional.of(customer));
 
@@ -202,7 +202,7 @@ class CustomerServiceTest {
     @Test
     void updateCustomer_canUpdateOnlyAge() {
         //Given
-        Customer customer = new Customer(1, "Roman", "roman.andriiv.dev@gmail.com", 27);
+        Customer customer = new Customer(1, "Roman", "roman.andriiv.dev@gmail.com", 27, Gender.MALE);
         when(customerDao.selectCustomerById(customer.getId())).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(null, null, 18);
@@ -224,7 +224,7 @@ class CustomerServiceTest {
     @Test
     void updateCustomer_willThrowException_whenEmailAlreadyExists() {
         //Given
-        Customer customer = new Customer(1, "Roman", "roman.andriiv.dev@gmail.com", 27);
+        Customer customer = new Customer(1, "Roman", "roman.andriiv.dev@gmail.com", 27, Gender.MALE);
         when(customerDao.selectCustomerById(customer.getId())).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(null, "new.email@mail.com", null);
@@ -242,7 +242,7 @@ class CustomerServiceTest {
     @Test
     void updateCustomer_willThrowException_whenHasNoChanges() {
         //Given
-        Customer customer = new Customer(1, "Roman", "roman.andriiv.dev@gmail.com", 27);
+        Customer customer = new Customer(1, "Roman", "roman.andriiv.dev@gmail.com", 27, Gender.MALE);
         when(customerDao.selectCustomerById(customer.getId())).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(
