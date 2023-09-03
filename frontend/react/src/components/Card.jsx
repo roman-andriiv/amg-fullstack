@@ -1,6 +1,7 @@
 'use client'
 
 import {Avatar, Box, Center, Flex, Heading, Image, Stack, Tag, Text, useColorModeValue,} from '@chakra-ui/react'
+import {EmailIcon} from "@chakra-ui/icons";
 
 export default function CardWithImage({id, name, email, age, gender, imageNumber}) {
 
