@@ -10,7 +10,7 @@ const App = () => {
     const [customers, setCustomers] = useState([])
     const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
+    const fetchCustomers = () => {
         setLoading(true)
         getCustomers().then(resp => {
             setCustomers(resp.data)
@@ -19,6 +19,10 @@ const App = () => {
         }).finally(() => {
             setLoading(false)
         })
+    }
+
+    useEffect(() => {
+        fetchCustomers()
     }, [])
 
     if (loading) {
@@ -38,14 +42,15 @@ const App = () => {
     if (customers.length <= 0) {
         return (
             <SidebarWithHeader>
-                <Text>No customers available</Text>
+                <DrawerForm fetchCustomers={fetchCustomers}/>
+                <Text mt={3}>No customers available</Text>
             </SidebarWithHeader>
         )
     }
 
     return (
         <SidebarWithHeader>
-            <DrawerForm/>
+            <DrawerForm fetchCustomers={fetchCustomers}/>
             <Wrap justify={"center"} spacing={30}>
                 {customers.map((customer, index) => (
                     <WrapItem key={index}>
@@ -54,7 +59,7 @@ const App = () => {
                             imageNumber={index}
                         />
                     </WrapItem>
-                    ))}
+                ))}
             </Wrap>
         </SidebarWithHeader>
     )

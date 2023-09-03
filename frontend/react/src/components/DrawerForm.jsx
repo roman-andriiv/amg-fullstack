@@ -12,7 +12,7 @@ import {
 import {AddIcon, CloseIcon} from '@chakra-ui/icons'
 import CreateCustomerForm from "./CreateCustomerForm.jsx";
 
-const DrawerForm = () => {
+const DrawerForm = ({fetchCustomers}) => {
     const {isOpen, onOpen, onClose} = useDisclosure()
     return <>
         <Button
@@ -28,7 +28,7 @@ const DrawerForm = () => {
                 <DrawerHeader>Create new customer</DrawerHeader>
 
                 <DrawerBody>
-                    <CreateCustomerForm/>
+                    <CreateCustomerForm fetchCustomers={fetchCustomers}/>
                 </DrawerBody>
 
                 <DrawerFooter>
