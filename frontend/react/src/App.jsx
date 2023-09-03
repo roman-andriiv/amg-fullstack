@@ -4,18 +4,20 @@ import {useEffect, useState} from "react";
 import {getCustomers} from "./services/client.js";
 import CardWithImage from "./components/Card.jsx";
 import DrawerForm from "./components/DrawerForm.jsx";
+import {errorNotification} from "./services/notification.js";
 
 const App = () => {
 
     const [customers, setCustomers] = useState([])
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState("")
 
     const fetchCustomers = () => {
         setLoading(true)
         getCustomers().then(resp => {
             setCustomers(resp.data)
         }).catch(err => {
-            console.log(err)
+            errorNotification(err.code, err.response.data.message)
         }).finally(() => {
             setLoading(false)
         })
@@ -44,6 +46,15 @@ const App = () => {
             <SidebarWithHeader>
                 <DrawerForm fetchCustomers={fetchCustomers}/>
                 <Text mt={3}>No customers available</Text>
+            </SidebarWithHeader>
+        )
+    }
+
+    if (error){
+        return (
+            <SidebarWithHeader>
+                <DrawerForm fetchCustomers={fetchCustomers}/>
+                <Text mt={3}>Oooops...there was an error</Text>
             </SidebarWithHeader>
         )
     }

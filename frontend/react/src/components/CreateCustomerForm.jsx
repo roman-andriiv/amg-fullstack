@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import {Alert, AlertIcon, Box, Button, FormLabel, Input, Select, Stack} from "@chakra-ui/react";
 import {EmailIcon} from "@chakra-ui/icons";
 import {saveCustomer} from "../services/client.js";
+import {errorNotification, successNotification} from "../services/notification.js";
 
 const MyTextInput = ({label, ...props}) => {
     // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -71,10 +72,11 @@ const CreateCustomerForm = ({fetchCustomers}) => {
                     setSubmitting(true)
                     saveCustomer(customer).then(r => {
                         console.log(r)
-                        alert('customer saved')
+                        successNotification("Customer saved", `${customer.name} was successfully saved`)
                         fetchCustomers()
-                    }).catch(e=>{
-                        console.log(e)
+                    }).catch(err=>{
+                        console.log(err)
+                        errorNotification(err.code, err.response.data.message)
                     }).finally(()=>{
                         setSubmitting(false)
                     })
