@@ -113,7 +113,9 @@ const CreateCustomerForm = ({fetchCustomers}) => {
                                 <option value="FEMALE">Female</option>
                             </MySelect>
 
-                            <Button isDisabled={!isValid || isSubmitting} type="submit">Submit</Button>
+                            <Button isDisabled={!isValid || isSubmitting} type="submit" colorScheme={"teal"}>
+                                Save
+                            </Button>
                         </Stack>
                     </Form>
                 )}

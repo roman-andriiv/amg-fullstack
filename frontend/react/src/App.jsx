@@ -68,6 +68,7 @@ const App = () => {
                         <CardWithImage
                             {...customer}
                             imageNumber={index}
+                            fetchCustomers = {fetchCustomers}
                         />
                     </WrapItem>
                 ))}
