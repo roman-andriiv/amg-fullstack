@@ -2,7 +2,7 @@ import {Spinner, Text, Wrap, WrapItem} from "@chakra-ui/react";
 import SidebarWithHeader from "./components/shared/SideBar.jsx"
 import {useEffect, useState} from "react";
 import {getCustomers} from "./services/client.js";
-import CardWithImage from "./components/Card.jsx";
+import CardWithImage from "./components/CustomerCard.jsx";
 import CreateCustomerDrawer from "./components/CreateCustomerDrawer.jsx";
 import {errorNotification} from "./services/notification.js";
 
@@ -50,7 +50,7 @@ const App = () => {
         )
     }
 
-    if (error){
+    if (error) {
         return (
             <SidebarWithHeader>
                 <CreateCustomerDrawer fetchCustomers={fetchCustomers}/>
@@ -68,7 +68,7 @@ const App = () => {
                         <CardWithImage
                             {...customer}
                             imageNumber={index}
-                            fetchCustomers = {fetchCustomers}
+                            fetchCustomers={fetchCustomers}
                         />
                     </WrapItem>
                 ))}

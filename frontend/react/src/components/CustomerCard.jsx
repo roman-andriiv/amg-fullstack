@@ -96,10 +96,10 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                             _focus={{
                                 bg: 'green.300'
                             }}
-                            onClick={onOpen}
-                        >
+                            onClick={onOpen}>
                             Delete
                         </Button>
+
                         <AlertDialog
                             isOpen={isOpen}
                             leastDestructiveRef={cancelRef}
