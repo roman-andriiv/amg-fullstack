@@ -15,7 +15,7 @@
     },
     {
       "name": "amg-backend-api",
-      "image": "romanandriiv/amg-backend-api:02.09.2023.13.24.50",
+      "image": "romanandriiv/amg-backend-api:05.09.2023.08.31.05",
       "essential": true,
       "memory": 512,
       "portMappings": [
