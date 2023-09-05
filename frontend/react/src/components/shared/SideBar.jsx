@@ -9,7 +9,8 @@ import {
     Flex,
     HStack,
     Icon,
-    IconButton, Image,
+    IconButton,
+    Image,
     Menu,
     MenuButton,
     MenuDivider,
@@ -20,14 +21,11 @@ import {
     useDisclosure,
     VStack,
 } from '@chakra-ui/react'
-import {FiBell, FiChevronDown, FiCompass, FiHome, FiMenu, FiSettings, FiStar, FiTrendingUp,} from 'react-icons/fi'
+import {FiBell, FiChevronDown, FiHome, FiMenu, FiSettings,} from 'react-icons/fi'
 
 
 const LinkItems = [
     {name: 'Home', icon: FiHome},
-    {name: 'Trending', icon: FiTrendingUp},
-    {name: 'Explore', icon: FiCompass},
-    {name: 'Favourites', icon: FiStar},
     {name: 'Settings', icon: FiSettings},
 ]
 
@@ -42,7 +40,8 @@ const SidebarContent = ({onClose, ...rest}) => {
             pos="fixed"
             h="full"
             {...rest}>
-            <Flex flexDirection="column" h="20" alignItems="center" mx="8" justifyContent="space-between" mb={81} mt={4}>
+            <Flex flexDirection="column" h="20" alignItems="center" mx="8" justifyContent="space-between" mb={81}
+                  mt={4}>
                 <Image
                     borderRadius='full'
                     boxSize='90px'
@@ -78,7 +77,7 @@ const NavItem = ({icon, children, ...rest}) => {
                 role="group"
                 cursor="pointer"
                 _hover={{
-                    bg: 'cyan.400',
+                    bg: 'teal.400',
                     color: 'white',
                 }}
                 {...rest}>
