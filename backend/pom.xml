@@ -20,6 +20,7 @@
         <docker.username>romanandriiv</docker.username>
         <docker.image.name>amg-backend-api</docker.image.name>
         <docker.image.tag/>
+        <jws.version>0.11.5</jws.version>
     </properties>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
@@ -104,6 +105,33 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jws.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jws.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jws.version}</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
