@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "amg-frontend-react",
-      "image": "romanandriiv/amg-frontend-react:latest",
+      "image": "romanandriiv/amg-frontend-react:05.09.2023.08.42.38",
       "essential": true,
       "memory": 256,
       "portMappings": [
