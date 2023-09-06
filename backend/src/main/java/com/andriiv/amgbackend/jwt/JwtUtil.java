@@ -29,8 +29,8 @@ public class JwtUtil {
 
     public String issueToken(String subject, Map<String, Object> claim) {
         return Jwts.builder()
-                .setSubject(subject)
                 .setClaims(claim)
+                .setSubject(subject)
                 .setIssuer("andriiv")
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(Date.from(Instant.now().plus(5, DAYS)))
