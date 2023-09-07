@@ -53,7 +53,7 @@ class CustomerJPADataAccessServiceTest {
         //Given
         Customer customer = new Customer("Roman Andriiv",
                 "roman.andriiv.dev@gmail.com",
-                27, Gender.MALE);
+                "password", 27, Gender.MALE);
         //When
         underTest.createCustomer(customer);
         //Then

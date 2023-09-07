@@ -36,7 +36,7 @@ public class AmgBackendApplication {
             Customer customer = new Customer(
                     fullName,
                     email,
-                    age, gender);
+                    "password", age, gender);
 
             customerRepository.save(customer);
         };

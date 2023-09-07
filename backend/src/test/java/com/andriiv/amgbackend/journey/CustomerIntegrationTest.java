@@ -68,7 +68,7 @@ public class CustomerIntegrationTest {
                 .getResponseBody();
 
         //make sure that customer is present
-        Customer expectedCustomer = new Customer(name, email, age, gender);
+        Customer expectedCustomer = new Customer(name, email, "password", age, gender);
 
         assertThat(customerList)
                 .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id").contains(expectedCustomer);
