@@ -40,10 +40,12 @@ public class CustomerIntegrationTest {
         String name = fakerName.fullName();
         String email = fakerName.firstName().toLowerCase() + "." + fakerName.lastName().toLowerCase()
                 + "@example.mail.com";
+        String password = "password";
+
         int age = RANDOM.nextInt(18, 100);
         Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
-        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, age, gender);
+        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, password, age, gender);
 
         //send a post request
         webTestClient.post()
@@ -102,11 +104,12 @@ public class CustomerIntegrationTest {
         String name = fakerName.fullName();
         String email = fakerName.firstName().toLowerCase() + "." + fakerName.lastName().toLowerCase()
                 + "@example.mail.com";
+        String password = "password";
         int age = RANDOM.nextInt(18, 100);
         Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
 
-        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, age, gender);
+        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, password, age, gender);
 
         //send a post request
         webTestClient.post()
@@ -163,11 +166,12 @@ public class CustomerIntegrationTest {
         String name = fakerName.fullName();
         String email = fakerName.firstName().toLowerCase() + "." + fakerName.lastName().toLowerCase()
                 + "@example.mail.com";
+        String password = "password";
         int age = RANDOM.nextInt(18, 100);
         Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
 
-        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, age, gender);
+        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, password, age, gender);
 
         //send a post request
         webTestClient.post()
@@ -200,7 +204,7 @@ public class CustomerIntegrationTest {
 
         //update customer
         String newName = "RomanNew";
-        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(newName, null, null);
+        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(newName, null, null, null);
 
         webTestClient.put()
                 .uri(CUSTOMER_URI + "/{id}", id)
@@ -222,7 +226,7 @@ public class CustomerIntegrationTest {
                 .returnResult()
                 .getResponseBody();
 
-        Customer expected = new Customer(id, newName, email, age, gender);
+        Customer expected = new Customer(id, newName, email, password, age, gender);
         assertThat(updatedCustomer).isEqualTo(expected);
     }
 
