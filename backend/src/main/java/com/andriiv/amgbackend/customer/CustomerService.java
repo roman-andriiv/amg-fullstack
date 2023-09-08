@@ -4,6 +4,7 @@ import com.andriiv.amgbackend.exception.DuplicateResourceException;
 import com.andriiv.amgbackend.exception.RequestValidationException;
 import com.andriiv.amgbackend.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +16,11 @@ import java.util.List;
 public class CustomerService {
     private final CustomerDao customerDao;
 
-    public CustomerService(@Qualifier("jdbc") CustomerDao customerDao) {
+    private final PasswordEncoder passwordEncoder;
+
+    public CustomerService(@Qualifier("jdbc") CustomerDao customerDao, PasswordEncoder passwordEncoder) {
         this.customerDao = customerDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Customer> getAllCustomers() {
@@ -38,7 +42,8 @@ public class CustomerService {
         Customer customer = new Customer(
                 registrationRequest.name(),
                 registrationRequest.email(),
-                "password", registrationRequest.age(),
+                passwordEncoder.encode(registrationRequest.password()),
+                registrationRequest.age(),
                 registrationRequest.gender());
 
         customerDao.createCustomer(customer);

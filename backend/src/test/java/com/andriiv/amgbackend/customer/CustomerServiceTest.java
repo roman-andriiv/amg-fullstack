@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -26,9 +27,12 @@ class CustomerServiceTest {
     @Mock
     private CustomerDao customerDao;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @BeforeEach
     void setUp() {
-        underTest = new CustomerService(customerDao);
+        underTest = new CustomerService(customerDao, passwordEncoder);
     }
 
     @Test
@@ -68,7 +72,11 @@ class CustomerServiceTest {
         //Given
         String email = "roman.andriiv.dev@gmail.com";
         when(customerDao.existCustomerWithEmail(email)).thenReturn(false);
-        CustomerRegistrationRequest request = new CustomerRegistrationRequest("Roman", email, "password", 27, Gender.MALE);
+        CustomerRegistrationRequest request =
+                new CustomerRegistrationRequest("Roman", email, "password", 27, Gender.MALE);
+
+        String passwordHash = "$dfdfdvv65514fddf3445%4332";
+        when(passwordEncoder.encode(request.password())).thenReturn(passwordHash);
 
         //When
         underTest.addCustomer(request);
@@ -83,6 +91,7 @@ class CustomerServiceTest {
         assertThat(cupturedCustomer.getName()).isEqualTo(request.name());
         assertThat(cupturedCustomer.getEmail()).isEqualTo(request.email());
         assertThat(cupturedCustomer.getAge()).isEqualTo(request.age());
+        assertThat(cupturedCustomer.getPassword()).isEqualTo(passwordHash);
     }
 
     @Test
