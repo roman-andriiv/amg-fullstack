@@ -23,16 +23,16 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
 
+    private final CustomerDtoMapper customerDtoMapper = new CustomerDtoMapper();
     private CustomerService underTest;
     @Mock
     private CustomerDao customerDao;
-
     @Mock
     private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     void setUp() {
-        underTest = new CustomerService(customerDao, passwordEncoder);
+        underTest = new CustomerService(customerDao, customerDtoMapper, passwordEncoder);
     }
 
     @Test
@@ -49,11 +49,11 @@ class CustomerServiceTest {
         int id = 1;
         Customer customer = new Customer(id, "Roman", "roman.andriiv.dev@gmail.com", "password", 27, Gender.MALE);
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
-
+        CustomerDto expected = customerDtoMapper.apply(customer);
         //When
-        Customer actual = underTest.getCustomer(id);
+        CustomerDto actual = underTest.getCustomer(id);
         //Then
-        assertThat(actual).isEqualTo(customer);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
