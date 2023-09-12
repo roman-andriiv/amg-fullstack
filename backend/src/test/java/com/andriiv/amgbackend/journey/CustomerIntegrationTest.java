@@ -1,15 +1,13 @@
 package com.andriiv.amgbackend.journey;
 
-import com.andriiv.amgbackend.customer.Customer;
-import com.andriiv.amgbackend.customer.CustomerRegistrationRequest;
-import com.andriiv.amgbackend.customer.CustomerUpdateRequest;
-import com.andriiv.amgbackend.customer.Gender;
+import com.andriiv.amgbackend.customer.*;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
@@ -48,49 +46,52 @@ public class CustomerIntegrationTest {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, password, age, gender);
 
         //send a post request
-        webTestClient.post()
+        String jwtToken = webTestClient.post()
                 .uri(CUSTOMER_URI)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(request), CustomerRegistrationRequest.class)
                 .exchange()
                 .expectStatus()
-                .isOk();
+                .isOk()
+                .returnResult(Void.class)
+                .getResponseHeaders()
+                .get(HttpHeaders.AUTHORIZATION)
+                .get(0);
 
         //get all customers
-        List<Customer> customerList = webTestClient.get()
+        List<CustomerDto> customerList = webTestClient.get()
                 .uri(CUSTOMER_URI)
                 .accept(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", jwtToken))
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBodyList(new ParameterizedTypeReference<Customer>() {
+                .expectBodyList(new ParameterizedTypeReference<CustomerDto>() {
                 })
                 .returnResult()
                 .getResponseBody();
 
-        //make sure that customer is present
-        Customer expectedCustomer = new Customer(name, email, "password", age, gender);
-
-        assertThat(customerList)
-                .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id").contains(expectedCustomer);
-
         int id = customerList.stream()
-                .filter(customer -> customer.getEmail().equals(email))
-                .map(Customer::getId)
+                .filter(customer -> customer.email().equals(email))
+                .map(CustomerDto::id)
                 .findFirst()
                 .orElseThrow();
 
-        expectedCustomer.setId(id);
+        //make sure that customer is present
+        CustomerDto expectedCustomer = new CustomerDto(id, name, email, gender, age, List.of("ROLE_USER"), email);
+        assertThat(customerList).contains(expectedCustomer);
+
 
         //get customer by id
         webTestClient.get()
                 .uri(CUSTOMER_URI + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", jwtToken))
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBody(new ParameterizedTypeReference<Customer>() {
+                .expectBody(new ParameterizedTypeReference<CustomerDto>() {
                 })
                 .isEqualTo(expectedCustomer);
     }
