@@ -1,12 +1,14 @@
 package com.andriiv.amgbackend.customer;
 
 import com.andriiv.amgbackend.AbstractTestcontainers;
+import com.andriiv.amgbackend.TestConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Import;
 
 import java.util.UUID;
 
@@ -17,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(TestConfig.class)
 class CustomerRepositoryTest extends AbstractTestcontainers {
 
     @Autowired
@@ -34,7 +37,7 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
     void existsCustomerByEmail() {
         //Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
-        Customer customer = new Customer(FAKER.name().fullName(), email, FAKER.number().numberBetween(18, 50), Gender.MALE);
+        Customer customer = new Customer(FAKER.name().fullName(), email, "password", FAKER.number().numberBetween(18, 50), Gender.MALE);
         underTest.save(customer);
 
         //When
@@ -60,7 +63,7 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
     void existsCustomerById() {
         //Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
-        Customer customer = new Customer(FAKER.name().fullName(), email, FAKER.number().numberBetween(18, 50), Gender.MALE);
+        Customer customer = new Customer(FAKER.name().fullName(), email, "password", FAKER.number().numberBetween(18, 50), Gender.MALE);
         underTest.save(customer);
 
         int id = underTest.findAll()

@@ -4,9 +4,11 @@ import com.andriiv.amgbackend.exception.DuplicateResourceException;
 import com.andriiv.amgbackend.exception.RequestValidationException;
 import com.andriiv.amgbackend.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Roman Andriiv (05.08.2023 - 09:12)
@@ -14,17 +16,25 @@ import java.util.List;
 @Service
 public class CustomerService {
     private final CustomerDao customerDao;
+    private final CustomerDtoMapper customerDtoMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public CustomerService(@Qualifier("jdbc") CustomerDao customerDao) {
+    public CustomerService(@Qualifier("jpa") CustomerDao customerDao, CustomerDtoMapper customerDtoMapper, PasswordEncoder passwordEncoder) {
         this.customerDao = customerDao;
+        this.customerDtoMapper = customerDtoMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public List<Customer> getAllCustomers() {
-        return customerDao.selectAllCustomers();
+    public List<CustomerDto> getAllCustomers() {
+        return customerDao.selectAllCustomers()
+                .stream()
+                .map(customerDtoMapper)
+                .collect(Collectors.toList());
     }
 
-    public Customer getCustomer(Integer id) {
+    public CustomerDto getCustomer(Integer id) {
         return customerDao.selectCustomerById(id)
+                .map(customerDtoMapper)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "customer with id [%s] not found".formatted(id)
                 ));
@@ -38,6 +48,7 @@ public class CustomerService {
         Customer customer = new Customer(
                 registrationRequest.name(),
                 registrationRequest.email(),
+                passwordEncoder.encode(registrationRequest.password()),
                 registrationRequest.age(),
                 registrationRequest.gender());
 
@@ -52,7 +63,10 @@ public class CustomerService {
     }
 
     public void updateCustomer(Integer id, CustomerUpdateRequest updateRequest) {
-        Customer customer = getCustomer(id);
+        Customer customer = customerDao.selectCustomerById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "customer with id [%s] not found".formatted(id)
+                ));
 
         boolean changed = false;
 

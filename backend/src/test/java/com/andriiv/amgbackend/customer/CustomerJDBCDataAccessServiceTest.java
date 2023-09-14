@@ -28,7 +28,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         //Given
         Customer customer = new Customer(FAKER.name().fullName(),
                 FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID(),
-                FAKER.number().numberBetween(18, 50), Gender.MALE);
+                "password", FAKER.number().numberBetween(18, 50), Gender.MALE);
         underTest.createCustomer(customer);
 
         //When
@@ -42,7 +42,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
     void selectCustomerById() {
         //Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
-        Customer customer = new Customer(FAKER.name().fullName(), email, FAKER.number().numberBetween(18, 50), Gender.MALE);
+        Customer customer = new Customer(FAKER.name().fullName(), email, "password", FAKER.number().numberBetween(18, 50), Gender.MALE);
         underTest.createCustomer(customer);
 
         int id = underTest.selectAllCustomers()
@@ -80,7 +80,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
     void existCustomerWithEmail() {
         //Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
-        Customer customer = new Customer(FAKER.name().fullName(), email, FAKER.number().numberBetween(18, 50), Gender.MALE);
+        Customer customer = new Customer(FAKER.name().fullName(), email, "password", FAKER.number().numberBetween(18, 50), Gender.MALE);
         underTest.createCustomer(customer);
 
         //When
@@ -105,7 +105,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
     void existCustomerWithId() {
         //Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
-        Customer customer = new Customer(FAKER.name().fullName(), email, FAKER.number().numberBetween(18, 50), Gender.MALE);
+        Customer customer = new Customer(FAKER.name().fullName(), email, "password", FAKER.number().numberBetween(18, 50), Gender.MALE);
         underTest.createCustomer(customer);
 
         int id = underTest.selectAllCustomers()
@@ -138,7 +138,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
     void deleteCustomerById() {
         //Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
-        Customer customer = new Customer(FAKER.name().fullName(), email, FAKER.number().numberBetween(18, 50), Gender.MALE);
+        Customer customer = new Customer(FAKER.name().fullName(), email, "password", FAKER.number().numberBetween(18, 50), Gender.MALE);
         underTest.createCustomer(customer);
 
         int id = underTest.selectAllCustomers()
@@ -159,7 +159,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
     void updateCustomerName() {
         //Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
-        Customer customer = new Customer(FAKER.name().fullName(), email, FAKER.number().numberBetween(18, 50), Gender.MALE);
+        Customer customer = new Customer(FAKER.name().fullName(), email, "password", FAKER.number().numberBetween(18, 50), Gender.MALE);
         underTest.createCustomer(customer);
 
         int id = underTest.selectAllCustomers()
@@ -192,7 +192,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
     void updateCustomerEmail() {
         //Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
-        Customer customer = new Customer(FAKER.name().fullName(), email, FAKER.number().numberBetween(18, 50), Gender.MALE);
+        Customer customer = new Customer(FAKER.name().fullName(), email, "password", FAKER.number().numberBetween(18, 50), Gender.MALE);
         underTest.createCustomer(customer);
 
         int id = underTest.selectAllCustomers()
@@ -225,7 +225,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
     void updateCustomerAge() {
         //Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
-        Customer customer = new Customer(FAKER.name().fullName(), email, FAKER.number().numberBetween(18, 50), Gender.MALE);
+        Customer customer = new Customer(FAKER.name().fullName(), email, "password", FAKER.number().numberBetween(18, 50), Gender.MALE);
         underTest.createCustomer(customer);
 
         int id = underTest.selectAllCustomers()
@@ -258,7 +258,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
     void updateCustomerAllProperties() {
         //Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
-        Customer customer = new Customer(FAKER.name().fullName(), email, FAKER.number().numberBetween(18, 50), Gender.MALE);
+        String password = FAKER.internet().password();
+        Customer customer = new Customer(FAKER.name().fullName(), email, password, FAKER.number().numberBetween(18, 50), Gender.MALE);
         underTest.createCustomer(customer);
 
         int id = underTest.selectAllCustomers()
@@ -274,6 +275,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         update.setId(id);
         update.setName("Roman");
         update.setEmail("roman.andriiv.dev@gmail.com");
+        update.setPassword("password");
         update.setAge(25);
         update.setGender(Gender.MALE);
 
@@ -288,7 +290,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
     void updateCustomer_willNotUpdate_whenNothingToUpdate() {
         //Given
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
-        Customer customer = new Customer(FAKER.name().fullName(), email, FAKER.number().numberBetween(18, 50), Gender.MALE);
+        Customer customer = new Customer(FAKER.name().fullName(), email, "password", FAKER.number().numberBetween(18, 50), Gender.MALE);
         underTest.createCustomer(customer);
 
         int id = underTest.selectAllCustomers()
