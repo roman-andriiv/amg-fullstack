@@ -3,6 +3,9 @@
 import {Alert, AlertIcon, Box, Button, Flex, FormLabel, Heading, Image, Input, Stack, Text,} from '@chakra-ui/react'
 import {Form, Formik, useField} from "formik";
 import * as Yup from 'yup'
+import {useAuth} from "../context/AuthContext.jsx";
+import React from "react";
+import {errorNotification} from "../../services/notification.js";
 
 const MyTextInput = ({label, ...props}) => {
 
@@ -22,6 +25,8 @@ const MyTextInput = ({label, ...props}) => {
 };
 
 const LoginForm = () => {
+    const {login} = useAuth()
+
     return (
         <Formik
             validateOnMount={true}
@@ -37,7 +42,19 @@ const LoginForm = () => {
             }
             initialValues={{username: '', password: ''}}
             onSubmit={(values, {setSubmitting}) => {
-                alert(JSON.stringify(values, null, 0))
+                setSubmitting(true)
+                login(values)
+                    .then(res => {
+                        //TODO: navigate to dashboard
+                        console.log("Success login", res)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        errorNotification(err.code, err.response.data.message)
+                    })
+                    .finally(() => {
+                        setSubmitting(false)
+                    })
             }}>
 
             {({isValid, isSubmitting}) => (
@@ -63,12 +80,14 @@ const LoginForm = () => {
                     </Stack>
                 </Form>
             )}
-
         </Formik>
     )
 }
 
 const Login = () => {
+
+    useAuth()
+
     return (
         <Stack minH={'100vh'} direction={{base: 'column', md: 'row'}}>
             <Flex p={8} flex={1} alignItems={'center'} justifyContent={'center'}>
