@@ -45,6 +45,7 @@ const CreateCustomerForm = ({fetchCustomers}) => {
                     email: '',
                     age: null,
                     gender: '',
+                    password: ''
                 }}
                 validationSchema={Yup.object({
                     name: Yup.string()
@@ -63,6 +64,9 @@ const CreateCustomerForm = ({fetchCustomers}) => {
                             'Invalid gender'
                         )
                         .required('Genger is required'),
+                    password: Yup.string()
+                        .min(6, 'Must be 6 characters or more')
+                        .required('Password is required'),
                 })}
                 onSubmit={(customer, {setSubmitting}) => {
                     setSubmitting(true)
@@ -96,6 +100,13 @@ const CreateCustomerForm = ({fetchCustomers}) => {
                                 placeholder="jane@example.com"
                             />
 
+                            <MyTextInput
+                                label="Password"
+                                name="password"
+                                type="password"
+                                placeholder="My strong password"
+                            />
+                            
                             <MyTextInput
                                 label="Age"
                                 name="age"

@@ -22,6 +22,7 @@ import {
     VStack,
 } from '@chakra-ui/react'
 import {FiBell, FiChevronDown, FiHome, FiMenu, FiSettings,} from 'react-icons/fi'
+import {useAuth} from "../context/AuthContext.jsx";
 
 
 const LinkItems = [
@@ -98,6 +99,9 @@ const NavItem = ({icon, children, ...rest}) => {
 }
 
 const MobileNav = ({onOpen, ...rest}) => {
+
+    const {logOut} = useAuth();
+
     return (
         <Flex
             ml={{base: 0, md: 60}}
@@ -159,7 +163,7 @@ const MobileNav = ({onOpen, ...rest}) => {
                             <MenuItem>Settings</MenuItem>
                             <MenuItem>Billing</MenuItem>
                             <MenuDivider/>
-                            <MenuItem>Sign out</MenuItem>
+                            <MenuItem onClick={logOut}>Log out</MenuItem>
                         </MenuList>
                     </Menu>
                 </Flex>

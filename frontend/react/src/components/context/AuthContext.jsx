@@ -4,13 +4,13 @@ import {login as performLogin} from "../../services/client.js";
 
 const AuthContext = createContext({})
 const AuthProvider = ({children}) => {
+
     const [customer, setCustomer] = useState(null);
-    const login = async (usernameAndPassword) => {
+    const logIn = async (usernameAndPassword) => {
         return new Promise((resolve, reject) => {
             performLogin(usernameAndPassword)
                 .then(res => {
                     const jwtToken = res.headers["authorization"];
-                    //TODO: save the token
                     localStorage.setItem("access_token", jwtToken)
                     console.log(jwtToken)
                     setCustomer({
@@ -23,8 +23,14 @@ const AuthProvider = ({children}) => {
                 })
         })
     }
+
+    const logOut = () => {
+        localStorage.removeItem("access_token")
+        setCustomer(null)
+    }
+
     return (
-        <AuthContext.Provider value={{customer, login}}>
+        <AuthContext.Provider value={{customer, logIn, logOut}}>
             {children}
         </AuthContext.Provider>
     )
