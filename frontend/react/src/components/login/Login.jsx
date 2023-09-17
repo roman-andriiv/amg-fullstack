@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 import {useAuth} from "../context/AuthContext.jsx";
 import React from "react";
 import {errorNotification} from "../../services/notification.js";
+import {useNavigate} from "react-router-dom";
 
 const MyTextInput = ({label, ...props}) => {
 
@@ -25,7 +26,8 @@ const MyTextInput = ({label, ...props}) => {
 };
 
 const LoginForm = () => {
-    const {login} = useAuth()
+    const {login} = useAuth();
+    const navigate = useNavigate();
 
     return (
         <Formik
@@ -45,8 +47,8 @@ const LoginForm = () => {
                 setSubmitting(true)
                 login(values)
                     .then(res => {
-                        //TODO: navigate to dashboard
-                        console.log("Success login", res)
+                        navigate("/dashboard")
+                        console.log("Successfully logged in")
                     })
                     .catch(err => {
                         console.log(err)

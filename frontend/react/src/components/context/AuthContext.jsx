@@ -11,6 +11,7 @@ const AuthProvider = ({children}) => {
                 .then(res => {
                     const jwtToken = res.headers["authorization"];
                     //TODO: save the token
+                    localStorage.setItem("access_token", jwtToken)
                     console.log(jwtToken)
                     setCustomer({
                         ...res.data.customerDto
