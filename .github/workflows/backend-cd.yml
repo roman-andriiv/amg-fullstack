@@ -34,7 +34,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
           cache: 'maven'
 
       - name: Login to Docker Hub
@@ -72,8 +72,8 @@ jobs:
 
       - name: Commit and push Dockerrun.aws.json
         run: |
-           git config user.name github-actions
-           git config user.email github-actions@github.com
-           git add ../Dockerrun.aws.json
-           git commit -m "Update Dockerrun.aws.json docker image with new tag ${{ steps.build-number.outputs.BUILD_NUMBER }}"
-           git push
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add ../Dockerrun.aws.json
+          git commit -m "Update Dockerrun.aws.json docker image with new tag ${{ steps.build-number.outputs.BUILD_NUMBER }}"
+          git push
