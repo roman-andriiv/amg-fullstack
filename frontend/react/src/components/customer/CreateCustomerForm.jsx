@@ -1,7 +1,7 @@
 import {Form, Formik, useField} from 'formik';
 import * as Yup from 'yup';
 import {Alert, AlertIcon, Box, Button, FormLabel, Input, Select, Stack} from "@chakra-ui/react";
-import {saveCustomer} from "../../services/client.js";
+import {registerCustomer} from "../../services/client.js";
 import {errorNotification, successNotification} from "../../services/notification.js";
 
 const MyTextInput = ({label, ...props}) => {
@@ -63,14 +63,14 @@ const CreateCustomerForm = ({fetchCustomers}) => {
                             ['MALE', 'FEMALE'],
                             'Invalid gender'
                         )
-                        .required('Genger is required'),
+                        .required('Gender is required'),
                     password: Yup.string()
                         .min(6, 'Must be 6 characters or more')
                         .required('Password is required'),
                 })}
                 onSubmit={(customer, {setSubmitting}) => {
                     setSubmitting(true)
-                    saveCustomer(customer).then(r => {
+                    registerCustomer(customer).then(r => {
                         console.log(r)
                         successNotification("Customer saved", `${customer.name} was successfully saved`)
                         fetchCustomers()
@@ -106,7 +106,7 @@ const CreateCustomerForm = ({fetchCustomers}) => {
                                 type="password"
                                 placeholder="My strong password"
                             />
-                            
+
                             <MyTextInput
                                 label="Age"
                                 name="age"

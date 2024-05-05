@@ -4,7 +4,7 @@ import {Alert, AlertIcon, Box, Button, Flex, FormLabel, Heading, Image, Input, S
 import {Form, Formik, useField} from "formik";
 import * as Yup from 'yup'
 import {useAuth} from "../context/AuthContext.jsx";
-import React from "react";
+import React, {useEffect} from "react";
 import {errorNotification} from "../../services/notification.js";
 import {useNavigate} from "react-router-dom";
 
@@ -88,8 +88,14 @@ const LoginForm = () => {
 
 const Login = () => {
 
-    useAuth()
+    const {customer} = useAuth()
+    const navigate = useNavigate()
 
+    useEffect(() => {
+        if (customer) {
+            navigate("/dashboard")
+        }
+    }, []);
     return (
         <Stack minH={'100vh'} direction={{base: 'column', md: 'row'}}>
             <Flex p={8} flex={1} alignItems={'center'} justifyContent={'center'}>

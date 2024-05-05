@@ -146,9 +146,9 @@ const MobileNav = ({onOpen, ...rest}) => {
                                     alignItems="flex-start"
                                     spacing="1px"
                                     ml="2">
-                                    <Text fontSize="md">{customer?.name} - {customer?.email}</Text>
-                                    {customer?.roles.map((role, id) => (
-                                        <Text id={id} fontSize="xs" color="gray.600">
+                                    <Text fontSize="md">{customer?.username}</Text>
+                                    {customer?.roles.map((role) => (
+                                        <Text key={self.crypto.randomUUID()} fontSize="xs" color="gray.600">
                                             {role}
                                         </Text>
                                     ))}
