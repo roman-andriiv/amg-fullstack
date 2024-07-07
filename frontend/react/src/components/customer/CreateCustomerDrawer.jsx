@@ -10,7 +10,7 @@ import {
     useDisclosure
 } from "@chakra-ui/react";
 import {AddIcon, CloseIcon} from '@chakra-ui/icons'
-import CreateCustomerForm from "./CreateCustomerForm.jsx";
+import CreateCustomerForm from "../shared/CreateCustomerForm.jsx";
 
 const CreateCustomerDrawer = ({fetchCustomers}) => {
     const {isOpen, onOpen, onClose} = useDisclosure()
@@ -28,7 +28,7 @@ const CreateCustomerDrawer = ({fetchCustomers}) => {
                 <DrawerHeader>Create new customer</DrawerHeader>
 
                 <DrawerBody>
-                    <CreateCustomerForm fetchCustomers={fetchCustomers}/>
+                    <CreateCustomerForm onSuccess={fetchCustomers}/>
                 </DrawerBody>
 
                 <DrawerFooter>

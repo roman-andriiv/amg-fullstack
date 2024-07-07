@@ -1,8 +1,19 @@
-'use client'
-
-import {Alert, AlertIcon, Box, Button, Flex, FormLabel, Heading, Image, Input, Stack, Text,} from '@chakra-ui/react'
+import {
+    Alert,
+    AlertIcon,
+    Box,
+    Button,
+    Flex,
+    FormLabel,
+    Heading,
+    Image,
+    Input,
+    Link,
+    Stack,
+    Text,
+} from '@chakra-ui/react';
 import {Form, Formik, useField} from "formik";
-import * as Yup from 'yup'
+import * as Yup from 'yup';
 import {useAuth} from "../context/AuthContext.jsx";
 import React, {useEffect} from "react";
 import {errorNotification} from "../../services/notification.js";
@@ -110,6 +121,9 @@ const Login = () => {
                     />
                     <Heading fontSize={'2xl'} mb={15}>Sign in to your account</Heading>
                     <LoginForm/>
+                    <Link color={"blue.500"} href={"/signup"}>
+                        Don't have an account? Sign up now
+                    </Link>
                 </Stack>
             </Flex>
             <Flex flex={1} p={10}
