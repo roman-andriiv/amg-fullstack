@@ -2,25 +2,13 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "amg-frontend-react",
-      "image": "romanandriiv/amg-frontend-react:05.09.2023.08.42.38",
-      "essential": true,
-      "memory": 256,
-      "portMappings": [
-        {
-          "hostPort": 80,
-          "containerPort": 5173
-        }
-      ]
-    },
-    {
       "name": "amg-backend-api",
       "image": "romanandriiv/amg-backend-api:14.09.2023.11.10.31",
       "essential": true,
       "memory": 512,
       "portMappings": [
         {
-          "hostPort": 8080,
+          "hostPort": 80,
           "containerPort": 8080
         }
       ],
