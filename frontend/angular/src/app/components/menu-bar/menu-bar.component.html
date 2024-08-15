@@ -1,0 +1,14 @@
+<h4 class="text-center mt-0">
+  Dashboard
+</h4>
+<div class="text-center">
+  <p-avatar
+    image="https://img.freepik.com/free-vector/technology-logo-modern-business-branding-digital-company-startup-vector_53876-136234.jpg?w=740&t=st=1693404919~exp=1693405519~hmac=8e2ab32ecce18be9338061592386680bbee3ef220556e4a91232ff4bf97863ec"
+    shape="circle"
+    size="xlarge"
+    styleClass="mr-2"/>
+</div>
+<div>
+  <app-menu-item *ngFor="let item of menu" [menuItem]="item">
+  </app-menu-item>
+</div>
